@@ -30,7 +30,9 @@ dependencies:
   google_fonts:
   http:
   flutter_html:
+  flutter_auth_buttons:
   url_launcher:
+  logger: 
 
 dev_dependencies:
   flutter_test:
