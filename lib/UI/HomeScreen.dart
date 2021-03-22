@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:derek_blog/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -6,12 +9,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _rememberMe = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
       children: <Widget>[
         Container(
+          //Background color gradient
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
@@ -40,117 +46,137 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Text(
                   'Sign In',
-                  style: TextStyle(
-                    color: Colors.amber,
-                    fontFamily: 'OpenSans',
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: textFieldStyle,
                 ),
                 SizedBox(height: 40.0),
                 _emailField(),
                 SizedBox(height: 40.0),
                 _passwordField(),
-                _forgotPasswordBtn(),
-                //  _rememberMe(),
-                //  _loginBtn(),
-                //  _signInTextSeparator(),
-                // _otherLoginBtns(),
-                // _signupBtn(),
-                //other fucntions
+                _rememberAndForgotRowBtns(),
+                _loginBtn(),
+                _otherLoginBtns(),
+                //SizedBox(height: 100.0),
+                _signupBtn(),
               ],
             ))
       ],
     ));
   }
-}
 
-Widget _emailField() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        'Email',
-        style: TextStyle(
-          color: Colors.amber,
-          fontFamily: 'OpenSans',
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
+  Widget _emailField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Email',
+          style: textFieldStyle,
         ),
-      ),
-      SizedBox(height: 10.0),
-      Container(
-          decoration: BoxDecoration(
-              color: Color(0xFF6CA8F1),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6.0,
-                    offset: Offset(0, 2))
-              ]),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
-              color: Colors.amber,
-              fontFamily: 'OpenSans',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ))
-    ],
-  );
-}
+        SizedBox(height: 10.0),
+        Container(
+            decoration: boxDecorationStyle,
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              style: textFieldStyle,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.email_rounded,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Enter your email',
+                  hintStyle: TextStyle(
+                    color: Colors.white54,
+                    fontFamily: 'OpenSans',
+                  )),
+            ))
+      ],
+    );
+  }
 
-Widget _passwordField() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        'Password',
-        style: TextStyle(
-          color: Colors.amber,
-          fontFamily: 'OpenSans',
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
+  Widget _passwordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Password',
+          style: textFieldStyle,
         ),
-      ),
-      SizedBox(height: 10.0),
-      Container(
-          alignment: Alignment.centerLeft,
-          //decoration: BoxDecoration(
-
-          //  ),
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: 'Enter your password',
-              labelStyle: TextStyle(
-                color: Colors.amber,
-                fontFamily: 'OpenSans',
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+        SizedBox(height: 10.0),
+        Container(
+            decoration: boxDecorationStyle,
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              obscureText: true,
+              style: textFieldStyle,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.vpn_key_rounded,
+                  color: Colors.white,
+                ),
+                hintText: 'Enter your password',
+                hintStyle: TextStyle(
+                  color: Colors.white54,
+                  fontFamily: 'OpenSans',
+                ),
               ),
-            ),
-          ))
-    ],
-  );
-}
+            ))
+      ],
+    );
+  }
 
-Widget _forgotPasswordBtn() {
-  return Container(
-    alignment: Alignment.centerRight,
-    child: TextButton(
-      onPressed: () =>
-       print('press me') ,
-      child: Text(
-        'Forgot Password?'
-      ),
-  ));
-}
+  Widget _rememberAndForgotRowBtns() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+            child: Row(children: <Widget>[
+          Checkbox(
+              value: _rememberMe,
+              onChanged: (value) {
+                setState(() {
+                  _rememberMe = value;
+                });
+              }),
+          Text('Remember Me')
+        ])),
+        Container(
+            child: TextButton(
+          onPressed: () => print('press me'),
+          child: Text('Forgot Password?'),
+        )),
+      ],
+    );
+  }
 
-Widget _rememberMe() {}
-Widget _loginBtn() {}
-Widget _signInTextSeparator() {}
-Widget _otherLoginBtns() {}
-Widget _signupBtn() {}
+  Widget _loginBtn() {
+    return Container(
+        child: ElevatedButton(
+            onPressed: () => print('login'),
+            //style:
+            child: Text('Login')));
+  }
+
+  Widget _otherLoginBtns() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SignInButton(
+          Buttons.Google,
+          text: "Sign up with Google",
+          onPressed: () {},
+        )
+      ],
+    );
+  }
+
+  Widget _signupBtn() {
+    return Container(
+        //alignment: Alignment(0.0, 3.0),
+        child: TextButton(
+      onPressed: () => print('press me'),
+      child: Text('Don\'t have an account? Sign up!'),
+    ));
+  }
+}
