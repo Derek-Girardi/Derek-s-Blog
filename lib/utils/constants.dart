@@ -2,9 +2,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final textFieldStyle = GoogleFonts.josefinSlab(
+final textFieldStyle = GoogleFonts.roboto(
   color: Color(0xFFE18D96),
-  fontSize: 25.0,
+  fontSize: 20.0,
   fontWeight: FontWeight.bold,
 );
 
