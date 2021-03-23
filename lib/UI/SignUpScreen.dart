@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:derek_blog/utils/constants.dart';
 
-class HomeScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
